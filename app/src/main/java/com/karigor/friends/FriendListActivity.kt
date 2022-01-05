@@ -1,65 +1,48 @@
-package com.karigor.friends;
+package com.karigor.friends
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity
+import butterknife.BindView
+import com.karigor.friends.R
+import androidx.recyclerview.widget.RecyclerView
+import com.karigor.friends.adapter.FriendListAdapter
+import com.karigor.friends.viewmodel.FriendListViewModel
+import android.os.Bundle
+import androidx.lifecycle.Observer
+import butterknife.ButterKnife
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.DefaultItemAnimator
+import com.karigor.friends.model.Result
 
-import android.os.Bundle;
-
-import com.karigor.friends.adapter.FriendListAdapter;
-import com.karigor.friends.model.Result;
-import com.karigor.friends.viewmodel.FriendListViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class FriendListActivity extends AppCompatActivity {
-
+class FriendListActivity : AppCompatActivity() {
+    @JvmField
     @BindView(R.id.friend_list_view)
-    RecyclerView friendListView;
-
-    private FriendListAdapter friendListAdapter;
-    private FriendListViewModel viewModel;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ButterKnife.bind(this);
-
-        setupPackageRV();
-
-        getSupportActionBar().setTitle("Friend List");
-        viewModel = new ViewModelProvider(this).get(FriendListViewModel.class);
-        viewModel.init(this);
-        viewModel.getResults().observe(this, new Observer<List<Result>>() {
-            @Override
-            public void onChanged(List<Result> results) {
+    var friendListView: RecyclerView? = null
+    private var friendListAdapter: FriendListAdapter? = null
+    private var viewModel: FriendListViewModel? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
+        setupPackageRV()
+        supportActionBar!!.title = "Friend List"
+        viewModel = ViewModelProvider(this).get(FriendListViewModel::class.java)
+        viewModel!!.init(this)
+        viewModel!!.results?.observe(this,
+            { results ->
                 if (results != null) {
-                    friendListAdapter.setResults(results);
+                    friendListAdapter!!.setResults(results)
                 }
-            }
-        });
+            })
 
 //        viewModel.CallApiForGetFriends(this);
-
     }
 
-    private void setupPackageRV() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-        friendListView.setLayoutManager(gridLayoutManager);
-        friendListView.setItemAnimator(new DefaultItemAnimator());
-        friendListAdapter = new FriendListAdapter(this);
-        friendListView.setAdapter(friendListAdapter);
-
+    private fun setupPackageRV() {
+        val gridLayoutManager = GridLayoutManager(applicationContext, 2)
+        friendListView!!.layoutManager = gridLayoutManager
+        friendListView!!.itemAnimator = DefaultItemAnimator()
+        friendListAdapter = FriendListAdapter(this)
+        friendListView!!.adapter = friendListAdapter
     }
 }

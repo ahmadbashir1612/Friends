@@ -1,100 +1,72 @@
-package com.karigor.friends.adapter;
+package com.karigor.friends.adapter
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Context
+import androidx.recyclerview.widget.RecyclerView
+import com.karigor.friends.adapter.FriendListAdapter.MyViewHolder
+import android.widget.TextView
+import com.karigor.friends.R
+import android.content.Intent
+import com.karigor.friends.FriendDetailActivity
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
+import com.karigor.friends.model.Result
+import java.util.ArrayList
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+class FriendListAdapter(private val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
+    private var results: List<Result> = ArrayList()
 
-import com.bumptech.glide.Glide;
-import com.karigor.friends.FriendDetailActivity;
-import com.karigor.friends.R;
-import com.karigor.friends.model.Result;
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var tvFullName: TextView
+        var tvCountry: TextView
+        var ivPortrait: ImageView
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.MyViewHolder> {
-
-
-private Context context;
-private List<Result> results=new ArrayList<>();
-
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-    public TextView tvFullName, tvCountry;
-    public ImageView ivPortrait;
-    public MyViewHolder(View view) {
-        super(view);
-
-        ivPortrait = view.findViewById(R.id.image_view);
-        tvFullName = view.findViewById(R.id.full_name_text_view);
-        tvCountry = view.findViewById(R.id.country_text_view);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                context.startActivity(new Intent(context, FriendDetailActivity.class)
-                        .putExtra("Result",results.get(getAdapterPosition())));
-
+        init {
+            ivPortrait = view.findViewById(R.id.image_view)
+            tvFullName = view.findViewById(R.id.full_name_text_view)
+            tvCountry = view.findViewById(R.id.country_text_view)
+            view.setOnClickListener {
+                context.startActivity(
+                    Intent(context, FriendDetailActivity::class.java)
+                        .putExtra("Result", results[adapterPosition])
+                )
             }
-        });
-
+        }
     }
 
-}
-
-    public FriendListAdapter(Context context) {
-        this.context = context;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.result_list_item, parent, false)
+        return MyViewHolder(itemView)
     }
 
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.result_list_item, parent, false);
-
-        return new MyViewHolder(itemView);
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val result = results[position]
+        holder.tvFullName.text =
+            result.name!!.title + " " + result.name.first + " " + result.name.last
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+        Glide.with(context)
+            .load(result.picture!!.large) //                .diskCacheStrategy(DiskCacheStrategy.NONE)
+            //                .skipMemoryCache(true)
+            //                .priority(Priority.IMMEDIATE)
+            .placeholder(circularProgressDrawable)
+            .error(R.drawable.noprofile)
+            .into(holder.ivPortrait)
+        holder.tvCountry.text = result.location!!.country
     }
 
-    @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Result result = results.get(position);
-
-        holder.tvFullName.setText(result.getName().getTitle()+" "+result.getName().getFirst()+" "+result.getName().getLast());
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius (30f);
-        circularProgressDrawable.start();
-        Glide.with(context).load(result.getPicture().getLarge())
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .priority(Priority.IMMEDIATE)
-                    .placeholder(circularProgressDrawable)
-                    .error(R.drawable.noprofile)
-                    .into(holder.ivPortrait);
-
-        holder.tvCountry.setText( result.getLocation().getCountry());
-
+    fun setResults(list: List<Result>) {
+        results = list
+        notifyDataSetChanged()
     }
 
-    public void setResults(List<Result> list){
-        this.results = list;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return results.size();
+    override fun getItemCount(): Int {
+        return results.size
     }
 }
-

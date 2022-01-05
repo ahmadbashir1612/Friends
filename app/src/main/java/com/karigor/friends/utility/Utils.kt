@@ -1,25 +1,20 @@
-package com.karigor.friends.utility;
+package com.karigor.friends.utility
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Context
+import android.net.NetworkInfo
+import android.net.ConnectivityManager
 
-public class Utils {
-
-    public static boolean haveInternet(Context ctx) {
-
-        NetworkInfo info = (NetworkInfo) ((ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-
-        if (info == null || !info.isConnected()) {
-            return false;
+object Utils {
+    fun haveInternet(ctx: Context): Boolean {
+        val info =
+            (ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+        if (info == null || !info.isConnected) {
+            return false
         }
-        if (info.isRoaming()) {
+        return if (info.isRoaming) {
             // here is the roaming option you can change it if you want to
             // disable internet while roaming, just return false
-            return true;
-        }
-        return true;
+            true
+        } else true
     }
-
-
 }

@@ -1,31 +1,19 @@
-package com.karigor.friends.model;
+package com.karigor.friends.model
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
+import java.io.Serializable
 
-import java.io.Serializable;
-
-public class Name  implements Serializable {
-
+class Name : Serializable {
     @SerializedName("title")
     @Expose
-    private String title;
+    val title: String? = null
+
     @SerializedName("first")
     @Expose
-    private String first;
+    val first: String? = null
+
     @SerializedName("last")
     @Expose
-    private String last;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getFirst() {
-        return first;
-    }
-
-    public String getLast() {
-        return last;
-    }
+    val last: String? = null
 }

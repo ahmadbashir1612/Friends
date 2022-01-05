@@ -1,33 +1,23 @@
-package com.karigor.friends.viewmodel;
+package com.karigor.friends.viewmodel
 
-import android.content.Context;
+import android.content.Context
+import com.karigor.friends.repository.FriendRepository.Companion.getInstance
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import com.karigor.friends.model.Result
+import com.karigor.friends.repository.FriendRepository
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+class FriendListViewModel : ViewModel() {
+    //    public void CallApiForGetFriends(Context context) {
+    //
+    //    }
+    var results: LiveData<List<Result>?>? = null
+        private set
 
-import com.karigor.friends.model.Result;
-import com.karigor.friends.repository.FriendRepository;
-
-import java.util.List;
-
-public class FriendListViewModel extends ViewModel {
-    private LiveData<List<Result>> results;
-
-    public void init(Context context){
-        if(results==null){
-
-            results=FriendRepository.getInstance(context).getResultLiveData();
-            FriendRepository.getInstance(context).CallApiForGetFriends(10);
+    fun init(context: Context?) {
+        if (results == null) {
+            results = getInstance(context!!)!!.getResultLiveData()
+            getInstance(context)!!.CallApiForGetFriends(10)
         }
     }
-
-//    public void CallApiForGetFriends(Context context) {
-//
-//    }
-
-    public LiveData<List<Result>> getResults() {
-        return results;
-    }
-
 }

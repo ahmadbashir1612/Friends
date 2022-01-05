@@ -1,30 +1,19 @@
-package com.karigor.friends.model;
+package com.karigor.friends.model
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
+import java.io.Serializable
 
-import java.io.Serializable;
-
-public class Picture  implements Serializable {
+class Picture : Serializable {
     @SerializedName("large")
     @Expose
-    private String large;
+    val large: String? = null
+
     @SerializedName("medium")
     @Expose
-    private String medium;
+    val medium: String? = null
+
     @SerializedName("thumbnail")
     @Expose
-    private String thumbnail;
-
-    public String getLarge() {
-        return large;
-    }
-
-    public String getMedium() {
-        return medium;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
+    val thumbnail: String? = null
 }

@@ -1,17 +1,10 @@
-package com.karigor.friends.model;
+package com.karigor.friends.model
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
 
-import java.util.List;
-
-public class ApiResponse {
-
+class ApiResponse {
     @SerializedName("results")
     @Expose
-    private List<Result> results;
-
-    public List<Result> getResults() {
-        return results;
-    }
+    val results: List<Result>? = null
 }

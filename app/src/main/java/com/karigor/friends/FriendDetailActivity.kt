@@ -1,14 +1,12 @@
-package com.karigor.friends;
+package com.karigor.friends
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.karigor.friends.R
 
-import android.os.Bundle;
-
-public class FriendDetailActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_detail);
+class FriendDetailActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_friend_detail)
     }
 }
