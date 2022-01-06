@@ -3,15 +3,21 @@ package com.karigor.friends
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.bumptech.glide.Glide
 import com.karigor.friends.R
 import com.karigor.friends.model.Result
+import android.content.Intent
+
+
+
 
 class FriendDetailActivity : AppCompatActivity() {
 
@@ -63,6 +69,18 @@ class FriendDetailActivity : AppCompatActivity() {
         emailTextView.text = "Email : "+friend.email
         phoneTextView.text = "Phone : "+friend.phone
 
+
+    }
+
+    @OnClick(R.id.email_text_view)
+    fun emailPressed() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(friend.email))
+//        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+//        intent.putExtra(Intent.EXTRA_TEXT, message)
+            .setPackage("com.google.android.gm");
+        intent.type = "message/rfc822"
+        startActivity(Intent.createChooser(intent, "Choose an email client"))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
