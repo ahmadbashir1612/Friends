@@ -31,7 +31,7 @@ class FriendListAdapter(private val context: Context) : RecyclerView.Adapter<MyV
             view.setOnClickListener {
                 context.startActivity(
                     Intent(context, FriendDetailActivity::class.java)
-                        .putExtra("Result", results[adapterPosition])
+                        .putExtra("FRIEND", results[adapterPosition])
                 )
             }
         }
@@ -52,7 +52,8 @@ class FriendListAdapter(private val context: Context) : RecyclerView.Adapter<MyV
         circularProgressDrawable.centerRadius = 30f
         circularProgressDrawable.start()
         Glide.with(context)
-            .load(result.picture!!.large) //                .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .load(result.picture!!.large)
+            //                .diskCacheStrategy(DiskCacheStrategy.NONE)
             //                .skipMemoryCache(true)
             //                .priority(Priority.IMMEDIATE)
             .placeholder(circularProgressDrawable)

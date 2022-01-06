@@ -3,11 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Projects/Friends/app/src/main/res/drawable/transparent_offer_text_background.xml" value="0.34427083333333336" />
-        <entry key="..\:/Projects/Friends/app/src/main/res/layout/activity_main.xml" value="0.328125" />
-        <entry key="..\:/Projects/Friends/app/src/main/res/layout/custom_item_layout.xml" value="0.55" />
-        <entry key="..\:/Projects/Friends/app/src/main/res/layout/result_list_item.xml" value="0.33" />
-        <entry key="..\:/gitlabprojects/Friends/app/src/main/res/layout/activity_friend_detail.xml" value="0.20416666666666666" />
+        <entry key="..\:/gitlabprojects/Friends/app/src/main/res/layout/activity_friend_detail.xml" value="0.25" />
         <entry key="..\:/gitlabprojects/Friends/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
       </map>
     </option>

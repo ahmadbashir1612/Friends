@@ -15,17 +15,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.karigor.friends.model.Result
 
 class FriendListActivity : AppCompatActivity() {
-    @JvmField
-    @BindView(R.id.friend_list_view)
-    var friendListView: RecyclerView? = null
+
+    @BindView(R.id.friend_list_view) lateinit var friendListView: RecyclerView
     private var friendListAdapter: FriendListAdapter? = null
     private var viewModel: FriendListViewModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar!!.title = "Friend List"
+
         ButterKnife.bind(this)
         setupPackageRV()
-        supportActionBar!!.title = "Friend List"
+
         viewModel = ViewModelProvider(this).get(FriendListViewModel::class.java)
         viewModel!!.init(this)
         viewModel!!.results?.observe(this,

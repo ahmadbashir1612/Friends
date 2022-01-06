@@ -18,28 +18,29 @@ class FriendRepository private constructor(var context: Context) {
     private val resultLiveData: MutableLiveData<List<Result>?>
     fun CallApiForGetFriends(number: Int) {
         Client.resetApiClient()
-        val call = Client.getClient(Url.base_url, "").create(
+        val call = Client.getClient(Url.base_url, "")?.create(
             APIService::class.java
-        )
-            .getRandomFriends(number)
-        call.enqueue(object : Callback<ApiResponse> {
-            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.results != null) {
-                        resultLiveData.postValue(response.body()!!.results)
+        )?.getRandomFriends(number)
+        if (call != null) {
+            call.enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()!!.results != null) {
+                            resultLiveData.postValue(response.body()!!.results)
+                        } else {
+                            resultLiveData.postValue(null)
+                        }
                     } else {
                         resultLiveData.postValue(null)
                     }
-                } else {
+                }
+
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    //     Toasty.error(context, t.getMessage(), Toast.LENGTH_SHORT, true).show();
                     resultLiveData.postValue(null)
                 }
-            }
-
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                //     Toasty.error(context, t.getMessage(), Toast.LENGTH_SHORT, true).show();
-                resultLiveData.postValue(null)
-            }
-        })
+            })
+        }
     }
 
     fun getResultLiveData(): LiveData<List<Result>?> {
@@ -48,6 +49,7 @@ class FriendRepository private constructor(var context: Context) {
 
     companion object {
         private var instance: FriendRepository? = null
+
         @JvmStatic
         @Synchronized
         fun getInstance(context: Context): FriendRepository? {
@@ -62,3 +64,4 @@ class FriendRepository private constructor(var context: Context) {
         resultLiveData = MutableLiveData()
     }
 }
+

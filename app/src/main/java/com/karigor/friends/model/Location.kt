@@ -13,6 +13,10 @@ class Location : Serializable {
     @Expose
     val state: String? = null
 
+    @SerializedName("street")
+    @Expose
+    val street: Street? = null
+
     @SerializedName("country")
     @Expose
     val country: String? = null

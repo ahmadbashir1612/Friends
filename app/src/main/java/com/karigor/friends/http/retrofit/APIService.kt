@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface APIService {
     @Headers("Content-Type:application/json")
     @GET("api")
-    fun getRandomFriends(@Query("results") resultNumber: Int): Call<ApiResponse?>?
+    fun getRandomFriends(@Query("results") resultNumber: Int): Call<ApiResponse>?
 }
