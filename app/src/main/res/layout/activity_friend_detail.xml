@@ -91,18 +91,18 @@
             app:layout_constraintTop_toBottomOf="@+id/state_text_view" />
 
         <TextView
+            android:gravity="center"
             android:id="@+id/email_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="10dp"
-            android:text="Email: "
             android:clickable="true"
-            android:textStyle="bold"
+            android:drawableRight="@android:drawable/ic_dialog_email"
+            android:text="Email: "
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/country_text_view" />
 

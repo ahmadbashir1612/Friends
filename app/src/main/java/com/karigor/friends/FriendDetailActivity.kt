@@ -66,7 +66,7 @@ class FriendDetailActivity : AppCompatActivity() {
         cityTextView.text = "City : "+friend.location!!.city
         stateTextView.text = "State : "+friend.location!!.state
         countryTextView.text = "Country : "+friend.location!!.country
-        emailTextView.text = "Email : "+friend.email
+        emailTextView.text = "Email : "+friend.email+" "
         phoneTextView.text = "Phone : "+friend.phone
 
 
